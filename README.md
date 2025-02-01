@@ -61,7 +61,7 @@ Submit your completed app by providing a link to a **public GitHub repository**.
    - The Scan View.  
    - The bottom navigation bar.  
 
-Email the link to the repository to **juho.enala@nocfo.io**.  
+Email the link to the repository to **people@nocfo.io**. The email subject must include "Homework assignment". Good luck with the assignment! :)
 
 ---
 
