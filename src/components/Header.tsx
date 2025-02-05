@@ -1,16 +1,32 @@
-import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import React, { useContext } from 'react';
+import { View, Text, StyleSheet, Switch } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import { ThemeContext } from '../context/ThemeContext';
+import { darkTheme } from '../styles/theme';
 
-// Header Component
 const Header = () => {
+    const themeContext = useContext(ThemeContext);
+    const { theme, toggleTheme } = themeContext || {}; 
+
+    if (!theme) {
+        return <Text>Loading theme...</Text>;
+      }
   return (
-    <View style={styles.headerContainer}>
+   
+    <View style={[styles.headerContainer, { backgroundColor: theme.primary }]}>
       <Ionicons name="leaf-outline" size={28} color="#fff" style={styles.icon} />
-      <Text style={styles.headerTitle}>Plant Photo Saver</Text>
+      <Text style={[styles.headerTitle, { color: theme.text }]}>Plant Photo Saver</Text>
+      
+      <Switch
+        value={theme === darkTheme}
+        onValueChange={toggleTheme}
+        trackColor={{ false: theme.buttonBackground, true: theme.buttonText }}
+        thumbColor={theme.buttonText}
+      />
     </View>
   );
 };
+
 
 export default Header;
 
@@ -40,4 +56,5 @@ const styles = StyleSheet.create({
     marginTop: 2,
   },
 });
+
 

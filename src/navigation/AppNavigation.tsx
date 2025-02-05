@@ -15,7 +15,7 @@ import Header from '../components/Header';
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
 
-// Stack Navigator for List + Detail Screens
+
 function ListStack() {
   return (
     <Stack.Navigator>
@@ -74,3 +74,4 @@ export default function AppNavigation() {
    
   );
 }
+

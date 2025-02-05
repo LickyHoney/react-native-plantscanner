@@ -4,11 +4,14 @@ import { PlantContext } from '../context/PlantContext';
 import { useNavigation } from '@react-navigation/native';
 import * as ScreenOrientation from 'expo-screen-orientation';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import { ThemeContext } from '../context/ThemeContext';
 
 const ListScreen = () => {
-  const { plants, setPlants } = useContext(PlantContext); // Make sure your PlantContext supports setPlants
+  const { plants, setPlants } = useContext(PlantContext);
+  const { theme } = useContext(ThemeContext); 
   const navigation = useNavigation();
   const { width, height } = useWindowDimensions();
+  
   
   const [searchQuery, setSearchQuery] = useState('');
   const [filteredPlants, setFilteredPlants] = useState(plants);
@@ -58,20 +61,26 @@ const ListScreen = () => {
         { 
           text: "Delete", 
           style: "destructive", 
+          
           onPress: () => {
-            setPlants(plants.filter(plant => plant.id !== plantId));
-          } 
+            // Use deletePlant function from context
+            navigation.navigate('List', { plantId });
+        }
         }
       ]
     );
   };
 
+  if (!theme) {
+    return null; 
+  }
+
   return (
-    <View style={styles.container}>
-      <View style={styles.searchContainer}>
+    <View style={[styles.container, { backgroundColor: theme.background }]}>
+      <View style={[styles.searchContainer,{ backgroundColor: theme.background }]}>
         <Ionicons name="search-outline" size={20} color="#888" style={styles.searchIcon} />
         <TextInput
-          style={styles.searchInput}
+          style={[styles.searchInput, {color: theme.placeholderTex}]}
           placeholder="Search plants..."
           value={searchQuery}
           onChangeText={setSearchQuery}
@@ -88,22 +97,22 @@ const ListScreen = () => {
           key={`numColumns-${numColumns}`}
           renderItem={({ item }) => (
             <TouchableOpacity
-              style={[styles.card, { width: cardWidth, marginLeft: 1 }]}
+              style={[styles.card, { backgroundColor: theme.cardBackground }, { width: cardWidth, marginLeft: 1 }]}
               activeOpacity={0.7}
               onPress={() => handlePlantPress(item.id)}
             >
               {item.imageUri ? (
                 <Image source={{ uri: item.imageUri }} style={styles.image} />
               ) : (
-                <View style={styles.placeholderImage}>
-                  <Text style={styles.placeholderText}>No Image</Text>
+                <View style={[styles.placeholderImage, { backgroundColor: theme.cardBackground }]}>
+                  <Text style={[styles.placeholderText,{ color: theme.placeholderText }]}>No Image</Text>
                 </View>
               )}
               <View style={styles.cardContent}>
                 <View style={styles.cardTextContainer}>
                   <View>
-                    <Text style={styles.name}>{item.name}</Text>
-                    <Text style={styles.date}>Date Added: {item.dateAdded}</Text>
+                    <Text style={[styles.name, { color: theme.cardText }]}>{item.name}</Text>
+                    <Text style={[styles.date, { color: theme.cardText }]}>Date Added: {item.dateAdded}</Text>
                   </View>
                   <TouchableOpacity onPress={() => handleDeletePlant(item.id)} style={styles.deleteButton}>
                     <Ionicons name="trash-outline" size={22} color="red" />
@@ -115,8 +124,8 @@ const ListScreen = () => {
         />
       )}
 
-      <TouchableOpacity style={styles.addButton} onPress={() => navigation.navigate('Scan')}>
-        <Text style={styles.addButtonText}>Add New Plant</Text>
+      <TouchableOpacity style={[styles.addButton, { backgroundColor: theme.buttonBackground }]} onPress={() => navigation.navigate('Scan')}>
+        <Text style={[styles.addButtonText, { color: theme.buttonText }]}>Add New Plant</Text>
       </TouchableOpacity>
     </View>
   );
@@ -230,4 +239,6 @@ const styles = StyleSheet.create({
 });
 
 export default ListScreen;
+
+
 

@@ -3,10 +3,13 @@ import { View, Text, TextInput, Image, StyleSheet, ScrollView, TouchableOpacity,
 import { PlantContext } from '../context/PlantContext';
 import * as ImagePicker from 'expo-image-picker';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import { ThemeContext } from '../context/ThemeContext';
 
 const DetailScreen = ({ route, navigation }) => {
   const { plantId } = route.params;
   const { plants, updatePlant } = useContext(PlantContext);
+  const { theme } = useContext(ThemeContext); 
+  
 
   const plant = plants.find((item) => item.id === plantId);
 
@@ -14,7 +17,7 @@ const DetailScreen = ({ route, navigation }) => {
   const [notes, setNotes] = useState(plant?.notes || '');
   const [imageUri, setImageUri] = useState(plant?.imageUri || '');
 
-  // Function to request camera permissions
+  
   const requestCameraPermission = async () => {
     try {
       const { status } = await ImagePicker.requestCameraPermissionsAsync();
@@ -29,7 +32,7 @@ const DetailScreen = ({ route, navigation }) => {
     }
   };
 
-  // Function to pick an image from the gallery
+ 
   const pickImageFromGallery = async () => {
     try {
       const result = await ImagePicker.launchImageLibraryAsync({
@@ -46,7 +49,7 @@ const DetailScreen = ({ route, navigation }) => {
     }
   };
 
-  // Function to take a photo using the camera
+  
   const takePhoto = async () => {
     try {
       const hasPermission = await requestCameraPermission();
@@ -86,20 +89,23 @@ const DetailScreen = ({ route, navigation }) => {
       Alert.alert('Error', 'Failed to update plant details.');
     }
   };
+  if (!theme) {
+    return null; 
+  }
 
   return (
-    <ScrollView style={styles.container} contentContainerStyle={{ flexGrow: 1 }}>
-      <Text style={styles.label}>Plant Name</Text>
+    <ScrollView style={[styles.container, { backgroundColor: theme.background }]} contentContainerStyle={{ flexGrow: 1 }}>
+      <Text style={[styles.label,  {color: theme.placeholderText}]}>Plant Name</Text>
       <TextInput
-        style={styles.input}
+        style={[styles.input,{ backgroundColor: theme.background } ]}
         value={name}
         onChangeText={setName}
         placeholder="Enter plant name"
       />
 
-      <Text style={styles.label}>Notes</Text>
+      <Text style={[styles.label, {color: theme.placeholderText}]}>Notes</Text>
       <TextInput
-        style={[styles.input, styles.textArea]}
+        style={[styles.input, styles.textArea, { backgroundColor: theme.background }]}
         value={notes}
         onChangeText={setNotes}
         placeholder="Enter notes"
@@ -110,33 +116,33 @@ const DetailScreen = ({ route, navigation }) => {
       {imageUri ? (
         <Image source={{ uri: imageUri }} style={styles.image} />
       ) : (
-        <View style={styles.placeholderImage}>
+        <View style={[styles.placeholderImage,{ backgroundColor: theme.background } ]}>
           <Ionicons name="image-outline" size={50} color="#666" />
-          <Text style={styles.placeholderText}>No Image</Text>
+          <Text style={[styles.placeholderText,{color: theme.placeholderText} ]}>No Image</Text>
         </View>
       )}
 
       <View style={styles.imagePickerContainer}>
-        <TouchableOpacity style={styles.imageButton} onPress={pickImageFromGallery}>
+        <TouchableOpacity style={[styles.imageButton,{ backgroundColor: theme.background }]} onPress={pickImageFromGallery}>
           <Ionicons name="image-outline" size={40} color="#007BFF" />
-          <Text style={styles.imageButtonText}>Gallery</Text>
+          <Text style={[styles.imageButtonText, {color: theme.placeholderText}]}>Gallery</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.imageButton} onPress={takePhoto}>
+        <TouchableOpacity style={[styles.imageButton,{ backgroundColor: theme.background }]} onPress={takePhoto}>
           <Ionicons name="camera-outline" size={40} color="#007BFF" />
-          <Text style={styles.imageButtonText}>Camera</Text>
+          <Text style={[styles.imageButtonText, {color: theme.placeholderText}]}>Camera</Text>
         </TouchableOpacity>
       </View>
 
-      <View style={styles.buttonRow}>
+      <View style={[styles.buttonRow, { backgroundColor: theme.background }]}>
         <TouchableOpacity style={[styles.button, styles.saveButton]} onPress={handleSave}>
           <Ionicons name="save-outline" size={20} color="#fff" />
-          <Text style={styles.buttonText}>Save Changes</Text>
+          <Text style={[styles.buttonText,{color: theme.placeholderText}]}>Save Changes</Text>
         </TouchableOpacity>
 
         <TouchableOpacity style={[styles.button, styles.cancelButton]} onPress={() => navigation.goBack()}>
           <Ionicons name="close-circle-outline" size={20} color="#fff" />
-          <Text style={styles.buttonText}>Cancel</Text>
+          <Text style={[styles.buttonText,{color: theme.placeholderText}]}>Cancel</Text>
         </TouchableOpacity>
       </View>
     </ScrollView>
@@ -241,3 +247,5 @@ const styles = StyleSheet.create({
 });
 
 export default DetailScreen;
+
+

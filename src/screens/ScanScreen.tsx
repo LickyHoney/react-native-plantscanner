@@ -5,6 +5,8 @@ import * as ImagePicker from 'expo-image-picker';
 import { useNavigation } from '@react-navigation/native';
 import uuid from 'react-native-uuid';
 import { Ionicons } from '@expo/vector-icons';
+import { ThemeContext } from '../context/ThemeContext';
+
 
 const ScanScreen = () => {
   const { addPlant } = useContext(PlantContext);
@@ -14,6 +16,7 @@ const ScanScreen = () => {
   const [notes, setNotes] = useState('');
   const [imageUri, setImageUri] = useState<string | null>(null);
   const [errors, setErrors] = useState<{ name?: string; image?: string }>({});
+  const { theme } = useContext(ThemeContext);
 
   // Handle picking image
   const handlePickImage = async () => {
@@ -24,11 +27,10 @@ const ScanScreen = () => {
     });
     if (!result.canceled) {
       setImageUri(result.assets[0].uri);
-      setErrors((prev) => ({ ...prev, image: undefined })); // Clear error if image is selected
+      setErrors((prev) => ({ ...prev, image: undefined })); 
     }
   };
 
-  // Validate inputs before saving
   const validateInputs = () => {
     let isValid = true;
     let newErrors: { name?: string; image?: string } = {};
@@ -47,9 +49,8 @@ const ScanScreen = () => {
     return isValid;
   };
 
-  // Save the plant and clear the form
   const handleSavePlant = () => {
-    if (!validateInputs()) return; // Stop if validation fails
+    if (!validateInputs()) return; 
 
     const newPlant = {
       id: uuid.v4() as string,
@@ -61,21 +62,19 @@ const ScanScreen = () => {
 
     addPlant(newPlant);
 
-    // Clear the form after saving
     setPlantName('');
     setNotes('');
     setImageUri(null);
-    setErrors({}); // Clear errors
+    setErrors({}); 
 
-    // Navigate to List screen
     navigation.navigate('List');
   };
 
   return (
-    <ScrollView style={styles.container} contentContainerStyle={{ flexGrow: 1, justifyContent: 'center' }}>
-      <Text style={styles.title}>Add a New Plant</Text>
+    <ScrollView style={[styles.container,,{ backgroundColor: theme.background }]} contentContainerStyle={{ flexGrow: 1, justifyContent: 'center' }}>
+      <Text style={[styles.title,{color: theme.placeholderText}]}>Add a New Plant</Text>
 
-      {/* Plant Name Input */}
+     
       <View style={styles.inputContainer}>
         <Ionicons name="leaf-outline" size={20} color="#4CAF50" style={styles.icon} />
         <TextInput
@@ -83,24 +82,24 @@ const ScanScreen = () => {
           value={plantName}
           onChangeText={(text) => {
             setPlantName(text);
-            setErrors((prev) => ({ ...prev, name: undefined })); // Clear error when user types
+            setErrors((prev) => ({ ...prev, name: undefined })); 
           }}
           style={styles.input}
         />
       </View>
-      {errors.name && <Text style={styles.errorText}>{errors.name}</Text>}
+      {errors.name && <Text style={[styles.errorText,{color: theme.placeholderText}]}>{errors.name}</Text>}
 
-      {/* Take Photo Button */}
+      
       <TouchableOpacity style={styles.button} onPress={handlePickImage}>
         <Ionicons name="camera-outline" size={24} color="#fff" />
-        <Text style={styles.buttonText}>Take Photo</Text>
+        <Text style={[styles.buttonText,{color: theme.placeholderText}]}>Take Photo</Text>
       </TouchableOpacity>
-      {errors.image && <Text style={styles.errorText}>{errors.image}</Text>}
+      {errors.image && <Text style={[styles.errorText,{color: theme.placeholderText}]}>{errors.image}</Text>}
 
-      {/* Image Preview */}
+    
       {imageUri && <Image source={{ uri: imageUri }} style={styles.image} />}
 
-      {/* Notes Input (Optional) */}
+      
       <View style={styles.inputContainer}>
         <Ionicons name="create-outline" size={20} color="#4CAF50" style={styles.icon} />
         <TextInput
@@ -112,16 +111,16 @@ const ScanScreen = () => {
         />
       </View>
 
-      {/* Save Plant Button */}
+   
       <TouchableOpacity style={styles.button} onPress={handleSavePlant}>
         <Ionicons name="save-outline" size={24} color="#fff" />
-        <Text style={styles.buttonText}>Save Plant</Text>
+        <Text style={[styles.buttonText,{color: theme.placeholderText}]}>Save Plant</Text>
       </TouchableOpacity>
     </ScrollView>
   );
 };
 
-// 🌿💚 **STYLES**
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -192,3 +191,4 @@ const styles = StyleSheet.create({
 });
 
 export default ScanScreen;
+

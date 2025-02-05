@@ -12,8 +12,6 @@ A simple and intuitive mobile app that allows users to capture photos of plants,
 - [Screenshots](#screenshots)
 - [Installation](#installation)
 - [Usage](#usage)
-- [Contributing](#contributing)
-- [License](#license)
 
 ---
 
@@ -24,6 +22,7 @@ The **Plant Photo App** enables users to:
 - Add details such as the plant’s name and notes.
 - View a list of plants stored in the app, and access detailed information about each one.
 - Support for both portrait and landscape orientations for a responsive layout.
+- Implemented dark and light theme for all screens.
 
 Built with **React Native**, **Expo**, and **React Context API**, the app is designed for scalability and simplicity, focusing on usability and a minimalistic design.
 
@@ -33,9 +32,11 @@ Built with **React Native**, **Expo**, and **React Context API**, the app is des
 - **Capture photos**: Take pictures of plants directly using the device camera.
 - **Add details**: Enter plant name and notes.
 - **View plants list**: See a list of all added plants.
-- **View plant Details**: See a details of each plant and allows edit and save the plant details liike name, image and notes.
+- **View plant Details**: See a details of each plant and allows edit and save the plant details like name, image and notes.
 - **Responsive UI**: Supports both portrait and landscape orientations with scrollable content.
 - **Navigation**: Easy navigation between the `List`, `Scan`, `Settings`and `Profile` screens using React Navigation.
+- **Theme Switching**: Toggle between light and dark themes to change the app's appearance based on user preference.
+
 
 ---
 
@@ -47,6 +48,7 @@ Built with **React Native**, **Expo**, and **React Context API**, the app is des
 - **Camera & Image Picker**: Expo ImagePicker
 - **Icons**: Ionicons
 - **UUID**: For generating unique plant IDs
+- **Theme**: Light and Dark Themes with React Context for global theme management
 
 ---
 
@@ -56,13 +58,16 @@ Built with **React Native**, **Expo**, and **React Context API**, the app is des
 - **React Native & Expo**: Chosen for cross-platform support and fast development. Expo simplifies the use of native features like camera functionality and image picking without requiring additional configuration.
 - **Modular Components**: The app’s UI is divided into small, reusable components to ensure scalability and maintainability.
 - **Screens**:
-  - **List Screen**: Displays a list of all plants stored in the app, with basic information (name, image, and date added). It is implemented as a scrollable list with the ability to view, search, delete and navigate to the Detail Screen by clicking on cards to view, update and save information like name, iimage and notes(optional).
+  - **List Screen**: The screen displays a list of all plants stored in the app, showcasing basic details such as the plant's name, image, and the date it was added. An "Add New Plant" button is provided to add new plants, which navigates to the Scan Screen for plant details. Initially, the screen is empty until plants are added.The list is scrollable and allows users to search for specific plants, delete them. Additionally, it navigates to the Detail Screen by tapping on the plant cards.  Detail Screen, users can view, update, and save information, including the plant's name, image, and optional notes.
   - **Scan Screen**: Captures plant photos, allows users to input plant name and notes, and saves the data.
   - **Detail Screen**: Users can view and edit the plant's details by clicking on each card inn the list, such as its name, photo, and notes.
   - **Settings Screen & Profile Screen**: Empty navigable tabs.
+- **Theme Management**: The app allows users to switch between light and dark themes using a toggle button in the header. The current theme is stored in the context and passed down to all screens and components. This provides a consistent look across the app with theme changes reflected instantly.
+ 
 
 ### State Management
 - **React Context API** is used to manage the global state of plant data, ensuring the app is simple and easy to scale. Plant data is handled centrally by the `PlantContext` provider, which allows for easy data sharing across screens.
+- **Theme Management** is handled by the ThemeContext, allowing users to toggle between the dark and light theme.
 
 ### Navigation
 - **React Navigation**: Used for managing navigation between the `List`, `Scan`, `Settings` and `Profile` screens. Bottom tab navigation provides a clear and user-friendly way to switch between sections.
@@ -134,6 +139,7 @@ To get the app running locally, follow these steps:
 4. View your saved plants on the **List Screen** and tap on any plant to view its details on the **Detail Screen**.
 
 ---
+
 
 
 

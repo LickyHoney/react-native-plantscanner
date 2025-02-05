@@ -1,6 +1,5 @@
 import React, { createContext, useState, ReactNode } from 'react';
 
-// Define the structure of a Plant object
 interface Plant {
   id: string;
   name: string;
@@ -9,7 +8,6 @@ interface Plant {
   notes?: string;
 }
 
-// Define the shape of the context
 interface PlantContextType {
   plants: Plant[];
   addPlant: (newPlant: Plant) => void;
@@ -17,15 +15,15 @@ interface PlantContextType {
   deletePlant: (plantId: string) => void;
 }
 
-// Create the context with an initial undefined value
+
 export const PlantContext = createContext<PlantContextType | undefined>(undefined);
 
-// Define props for PlantProvider
+
 interface PlantProviderProps {
   children: ReactNode;
 }
 
-// ✅ Fix: Ensure PlantProvider does NOT wrap a NavigationContainer
+
 export const PlantProvider = ({ children }: PlantProviderProps) => {
   const [plants, setPlants] = useState<Plant[]>([]);
 
@@ -33,7 +31,7 @@ export const PlantProvider = ({ children }: PlantProviderProps) => {
     setPlants((prevPlants) => [...prevPlants, newPlant]);
   };
 
-    // Update an existing plant
+   
   const updatePlant = (updatedPlant: Plant) => {
         setPlants((prevPlants) =>
           prevPlants.map((plant) =>
@@ -48,7 +46,8 @@ export const PlantProvider = ({ children }: PlantProviderProps) => {
 
   return (
     <PlantContext.Provider value={{ plants, addPlant, updatePlant, deletePlant }}>
-      {children}  {/* ✅ This must not contain a NavigationContainer */}
+      {children}  
     </PlantContext.Provider>
   );
 };
+
