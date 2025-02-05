@@ -108,7 +108,7 @@ To get the app running locally, follow these steps:
 
 1. **Clone the repository**:
     ```bash
-    git clone https://github.com/yourusername/plant-photo-app.git
+    git clone https://github.com/LickyHoney/nocfo-plantphotoapp.git
     cd plant-photo-app
     ```
 
@@ -119,14 +119,14 @@ To get the app running locally, follow these steps:
 
 3. **Start the app**:
     ```bash
-    expo start
+    npx expo start --clear
     ```
 
 4. Open the app in your simulator or device by scanning the QR code with the Expo Go app.
 
 ---
 
-## Usage
+## Device Usage
 
 1. Open the app on your device or simulator.
 2. On the **Scan Screen**, take a photo of your plant and enter its name and any notes.
