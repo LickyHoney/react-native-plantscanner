@@ -12,10 +12,11 @@ import ProfileScreen from '../screens/ProfileScreen';
 import DetailScreen from '../screens/DetailScreen';
 import Header from '../components/Header';
 
+// Create tab and stack navigators
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
 
-
+// Define stack navigator for the List screen with a nested Detail screen
 function ListStack() {
   return (
     <Stack.Navigator>
@@ -38,6 +39,7 @@ function ListStack() {
   );
 }
 
+// Main bottom tab navigator
 export default function AppNavigation() {
   return (
     

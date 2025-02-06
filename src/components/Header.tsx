@@ -8,6 +8,7 @@ const Header = () => {
     const themeContext = useContext(ThemeContext);
     const { theme, toggleTheme } = themeContext || {}; 
 
+    // Handle the case where theme is not yet available
     if (!theme) {
         return <Text>Loading theme...</Text>;
       }
@@ -30,6 +31,7 @@ const Header = () => {
 
 export default Header;
 
+// Styles for the header component
 const styles = StyleSheet.create({
   headerContainer: {
     flexDirection: 'row',

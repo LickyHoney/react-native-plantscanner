@@ -35,7 +35,7 @@ Built with **React Native**, **Expo**, and **React Context API**, the app is des
 - **View plant Details**: See a details of each plant and allows edit and save the plant details like name, image and notes.
 - **Responsive UI**: Supports both portrait and landscape orientations with scrollable content.
 - **Navigation**: Easy navigation between the `List`, `Scan`, `Settings`and `Profile` screens using React Navigation.
-- **Theme Switching**: Toggle between light and dark themes to change the app's appearance based on user preference.
+- **Theme Switching**: Toggle between light and dark themes to change the app's appearance based on user preference using toggle button in the header.
 
 
 ---
@@ -110,7 +110,7 @@ Built with **React Native**, **Expo**, and **React Context API**, the app is des
 
 | Detail Screen | Bottom Nav Bar |
 |------------|------------|
-| <img src="./src/assets/screenshots/plant_Detail_screen.jpg" alt="Detail Screen" width="300" height="600"> | <img src="./src/assets/screenshots/bottom_navbar.jpg" alt="Bottom Nav Bar" width="600" height="300"> |
+| <img src="./src/assets/screenshots/plant_Detail_screen.jpg" alt="Detail Screen" width="300" height="600"> | <img src="./src/assets/screenshots/bottom_navbar.jpg" alt="Bottom Nav Bar" width="300" height="300"> |
 
 
 ---

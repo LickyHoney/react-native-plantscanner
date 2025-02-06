@@ -1,6 +1,5 @@
 import { PlantProvider } from "../src/context/PlantContext";
 import AppNavigation from "../src/navigation/AppNavigation";
-import { NavigationContainer } from "@react-navigation/native";
 import { StyleSheet, Text, View } from "react-native";
 import { ThemeProvider } from '../src/context/ThemeContext';
 
@@ -8,9 +7,7 @@ export default function Page() {
   return (
     <ThemeProvider> 
       <PlantProvider>
-        {/* <NavigationContainer> */}
           <AppNavigation />
-        {/* </NavigationContainer> */}
       </PlantProvider>
     </ThemeProvider>
   );

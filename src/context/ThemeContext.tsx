@@ -1,30 +1,30 @@
-// src/context/ThemeContext.tsx
-
 import React, { createContext, useState, ReactNode } from 'react';
 import { lightTheme, darkTheme } from '../styles/theme';
 
-// Define the context type
+// Define the structure of the ThemeContext
 interface ThemeContextType {
   theme: typeof lightTheme | typeof darkTheme;
   toggleTheme: () => void;
 }
 
-// Create the context with initial value
+// Create a ThemeContext with an initial undefined value
 export const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
-// Define props for ThemeProvider
+// Define the props type for the ThemeProvider component
 interface ThemeProviderProps {
   children: ReactNode;
 }
 
+// ThemeProvider component manages the theme state and provides it to the app
 export const ThemeProvider = ({ children }: ThemeProviderProps) => {
   const [isDarkMode, setIsDarkMode] = useState<boolean>(false); // Default light mode
 
-  // Toggle between light and dark mode
+  // Function to toggle between light and dark themes
   const toggleTheme = () => {
     setIsDarkMode((prevMode) => !prevMode);
   };
 
+  // Determine the active theme based on the isDarkMode state
   const theme = isDarkMode ? darkTheme : lightTheme;
 
   return (

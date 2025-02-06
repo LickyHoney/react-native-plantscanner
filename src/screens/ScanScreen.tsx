@@ -9,22 +9,24 @@ import { ThemeContext } from '../context/ThemeContext';
 
 
 const ScanScreen = () => {
+  // Accessing the plant context for adding a new plant
   const { addPlant } = useContext(PlantContext);
   const navigation = useNavigation();
   
+  // State variables for form inputs
   const [plantName, setPlantName] = useState('');
   const [notes, setNotes] = useState('');
   const [imageUri, setImageUri] = useState<string | null>(null);
   const [errors, setErrors] = useState<{ name?: string; image?: string }>({});
   const { theme } = useContext(ThemeContext);
 
-
+// Function to request camera permissions from the user
   const requestCameraPermission = async () => {
     const { status } = await ImagePicker.requestCameraPermissionsAsync();
     return status === 'granted';
   };
 
-  // Handle picking image
+  // Function to handle image capture using the device's camera
   const handlePickImage = async () => {
     const hasPermission = await requestCameraPermission();
     
@@ -32,17 +34,20 @@ const ScanScreen = () => {
       alert('Camera permission is required to take a photo.');
       return;
     }
+    // Launch the camera and allow the user to take a photo
     const result = await ImagePicker.launchCameraAsync({
       allowsEditing: true,
       aspect: [4, 3],
       quality: 1,
     });
+    // If a photo is taken, update the state with the image URI
     if (!result.canceled) {
       setImageUri(result.assets[0].uri);
       setErrors((prev) => ({ ...prev, image: undefined })); 
     }
   };
 
+  // Function to validate form inputs
   const validateInputs = () => {
     let isValid = true;
     let newErrors: { name?: string; image?: string } = {};
@@ -61,9 +66,11 @@ const ScanScreen = () => {
     return isValid;
   };
 
+  // Function to handle saving a new plant
   const handleSavePlant = () => {
     if (!validateInputs()) return; 
 
+    // Create a new plant object with unique ID and current date
     const newPlant = {
       id: uuid.v4() as string,
       name: plantName,
@@ -72,13 +79,16 @@ const ScanScreen = () => {
       notes: notes,
     };
 
+    // Add the plant to the context
     addPlant(newPlant);
 
+    // Reset form fields after saving
     setPlantName('');
     setNotes('');
     setImageUri(null);
     setErrors({}); 
 
+    // Navigate back to the List screen
     navigation.navigate('List');
   };
 
@@ -132,7 +142,7 @@ const ScanScreen = () => {
   );
 };
 
-
+// Styles for the screen components
 const styles = StyleSheet.create({
   container: {
     flex: 1,

@@ -7,12 +7,12 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import { ThemeContext } from '../context/ThemeContext';
 
 const ListScreen = () => {
-  const { plants, setPlants } = useContext(PlantContext);
-  const { theme } = useContext(ThemeContext); 
+  const { plants, setPlants } = useContext(PlantContext); // Get plant data from context
+  const { theme } = useContext(ThemeContext); // Get theme from context
   const navigation = useNavigation();
   const { width, height } = useWindowDimensions();
   
-  
+  // State for managing search, filtered plants, selection mode, and layout configurations
   const [searchQuery, setSearchQuery] = useState('');
   const [filteredPlants, setFilteredPlants] = useState(plants);
   const [numColumns, setNumColumns] = useState(2);
@@ -20,11 +20,13 @@ const ListScreen = () => {
   const [isSelecting, setIsSelecting] = useState(false);
   const [selectedPlants, setSelectedPlants] = useState([]);
 
-  const maxCardWidth = 150;
+  const maxCardWidth = 150; // Maximum width for plant cards
 
   useEffect(() => {
+    // Allow screen orientation changes
     ScreenOrientation.unlockAsync(ScreenOrientation.OrientationLock.ALL);
     
+    // Adjust number of columns and card width based on screen width
     if (width > height) {
       if (width >= 1024) {
         setNumColumns(6);
@@ -44,6 +46,7 @@ const ListScreen = () => {
   }, [width, height]);
 
   useEffect(() => {
+    // Filter plants based on search query
     if (searchQuery === '') {
       setFilteredPlants(plants);
     } else {
@@ -53,21 +56,25 @@ const ListScreen = () => {
     }
   }, [searchQuery, plants]);
 
+// Navigate to plant detail screen
   const handlePlantPress = (plantId) => {
     navigation.navigate('Detail', { plantId });
   };
 
+  // Toggle selection mode
   const toggleSelectionMode = () => {
     setIsSelecting(!isSelecting);
     setSelectedPlants([]);
   };
 
+  // Toggle plant selection
   const toggleSelectPlant = (plantId) => {
     setSelectedPlants(prev => 
       prev.includes(plantId) ? prev.filter(id => id !== plantId) : [...prev, plantId]
     );
   };
 
+  // Delete selected plants with confirmation
   const handleDeleteSelected = () => {
     Alert.alert("Delete Selected", "Are you sure you want to delete the selected plants?", [
       { text: "Cancel", style: "cancel" },
@@ -84,7 +91,7 @@ const ListScreen = () => {
   };
 
   if (!theme) {
-    return null; 
+    return null; // Ensure theme is available
   }
   
   return (
@@ -115,19 +122,6 @@ const ListScreen = () => {
           )}
         </>
       }
-
-      ListEmptyComponent={
-    <View style={styles.emptyStateContainer}>
-      <Text style={styles.emptyStateText}>No plants added yet.</Text>
-      <Text style={styles.emptyStateSubText}>Tap the button below to add your first plant!</Text>
-      <TouchableOpacity
-        style={[styles.addButton, { backgroundColor: theme.buttonBackground }]}
-        onPress={() => navigation.navigate('Scan')}
-      >
-        <Text style={[styles.addButtonText, { color: theme.buttonText }]}>Add New Plant</Text>
-      </TouchableOpacity>
-    </View>
-  }
        
       ListFooterComponent={
         <TouchableOpacity style={[styles.addButton, { backgroundColor: theme.buttonBackground }]} onPress={() => navigation.navigate('Scan')}>
@@ -173,6 +167,7 @@ const ListScreen = () => {
   );
 };
 
+// Styles for the component
 const styles = StyleSheet.create({
   container: {
     flex: 1,

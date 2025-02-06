@@ -10,14 +10,15 @@ const DetailScreen = ({ route, navigation }) => {
   const { plants, updatePlant } = useContext(PlantContext);
   const { theme } = useContext(ThemeContext); 
   
-
+// Find the selected plant based on its ID
   const plant = plants.find((item) => item.id === plantId);
 
+  // State to manage plant details
   const [name, setName] = useState(plant?.name || '');
   const [notes, setNotes] = useState(plant?.notes || '');
   const [imageUri, setImageUri] = useState(plant?.imageUri || '');
 
-  
+  // Function to request camera permission
   const requestCameraPermission = async () => {
     try {
       const { status } = await ImagePicker.requestCameraPermissionsAsync();
@@ -32,7 +33,7 @@ const DetailScreen = ({ route, navigation }) => {
     }
   };
 
- 
+ // Function to pick an image from the gallery
   const pickImageFromGallery = async () => {
     try {
       const result = await ImagePicker.launchImageLibraryAsync({
@@ -49,7 +50,7 @@ const DetailScreen = ({ route, navigation }) => {
     }
   };
 
-  
+  // Function to take a new photo using the camera
   const takePhoto = async () => {
     try {
       const hasPermission = await requestCameraPermission();
@@ -69,6 +70,7 @@ const DetailScreen = ({ route, navigation }) => {
     }
   };
 
+// Function to handle saving the updated plant details
   const handleSave = () => {
     if (!name.trim()) {
       Alert.alert('Validation Error', 'Plant name cannot be empty.');
@@ -89,6 +91,8 @@ const DetailScreen = ({ route, navigation }) => {
       Alert.alert('Error', 'Failed to update plant details.');
     }
   };
+
+  // If theme is not available, return null to avoid rendering issues
   if (!theme) {
     return null; 
   }
@@ -149,6 +153,7 @@ const DetailScreen = ({ route, navigation }) => {
   );
 };
 
+// Styles for the DetailScreen component
 const styles = StyleSheet.create({
   container: {
     flex: 1,
