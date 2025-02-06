@@ -99,20 +99,24 @@ Built with **React Native**, **Expo**, and **React Context API**, the app is des
 <!-- [Download the PDF](./docs/project-documentation.pdf) -->
 ## Screenshots
 
-![Empty List](./src/assets/screenshots/Home Page.jpg)
+![Empty List](./src/assets/screenshots/HomePage.jpg)
+*List Screen displaying empty list*
+
+![Plant List](./src/assets/screenshots/ListScreen_lighttheme.jpg)
 *List Screen displaying all plants*
 
-![Plant List](./src/assets/screenshots/List Screen light theme.jpg)
-*List Screen displaying all plants*
-
-![Add New Plant Button](./src/assets/screenshots/List View Scroll View.jpg)
-*List Screen displaying all plants*
+![Add New Plant Button](./src/assets/screenshots/ListView_scrollview.jpg)
+*List Screen displaying scroll vies and add new plant button*
 
 ![Scan Screen](./src/assets/screenshots/scannscreen.jpg)
 *Scan Screen to add new plants*
 
-![Detail Screen](./src/assets/screenshots/plant Detail screen.jpg)
+![Detail Screen](./src/assets/screenshots/plant_Detail_screen.jpg)
 *Detail Screen displaying plant information*
+
+![Bottom Nav Bar](./src/assets/screenshots/bottom_navbar.jpg)
+*Detail Screen displaying plant information*
+
 
 ---
 
