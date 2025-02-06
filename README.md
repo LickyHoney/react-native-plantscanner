@@ -96,7 +96,7 @@ Built with **React Native**, **Expo**, and **React Context API**, the app is des
 
 ## Documentation
 
-[Download the PDF](./docs/nocfo_plantphotoapp_doc.pdf)
+[View Documentation](./docs/nocfo_plantphotoapp_doc.pdf)
 
 ## Screenshots
 
