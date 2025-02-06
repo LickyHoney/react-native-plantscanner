@@ -1,5 +1,5 @@
 import React, { useContext, useState, useEffect } from 'react';
-import { View, Text, FlatList, Image, StyleSheet, TouchableOpacity, TextInput, useWindowDimensions, Alert } from 'react-native';
+import { View, Text, FlatList, Image, StyleSheet, TouchableOpacity, TextInput, useWindowDimensions, Alert, ScrollView } from 'react-native';
 import { PlantContext } from '../context/PlantContext';
 import { useNavigation } from '@react-navigation/native';
 import * as ScreenOrientation from 'expo-screen-orientation';
@@ -17,6 +17,8 @@ const ListScreen = () => {
   const [filteredPlants, setFilteredPlants] = useState(plants);
   const [numColumns, setNumColumns] = useState(2);
   const [cardWidth, setCardWidth] = useState(0);
+  const [isSelecting, setIsSelecting] = useState(false);
+  const [selectedPlants, setSelectedPlants] = useState([]);
 
   const maxCardWidth = 150;
 
@@ -25,9 +27,12 @@ const ListScreen = () => {
     
     if (width > height) {
       if (width >= 1024) {
-        setNumColumns(5);
+        setNumColumns(6);
       } else if (width >= 768) {
+        setNumColumns(5);
+      } else if (width >= 480) {
         setNumColumns(4);
+      
       } else {
         setNumColumns(3);
       }
@@ -52,82 +57,119 @@ const ListScreen = () => {
     navigation.navigate('Detail', { plantId });
   };
 
-  const handleDeletePlant = (plantId) => {
-    Alert.alert(
-      "Delete Plant",
-      "Are you sure you want to delete this plant?",
-      [
-        { text: "Cancel", style: "cancel" },
-        { 
-          text: "Delete", 
-          style: "destructive", 
-          
-          onPress: () => {
-            // Use deletePlant function from context
-            navigation.navigate('List', { plantId });
-        }
-        }
-      ]
+  const toggleSelectionMode = () => {
+    setIsSelecting(!isSelecting);
+    setSelectedPlants([]);
+  };
+
+  const toggleSelectPlant = (plantId) => {
+    setSelectedPlants(prev => 
+      prev.includes(plantId) ? prev.filter(id => id !== plantId) : [...prev, plantId]
     );
+  };
+
+  const handleDeleteSelected = () => {
+    Alert.alert("Delete Selected", "Are you sure you want to delete the selected plants?", [
+      { text: "Cancel", style: "cancel" },
+      { 
+        text: "Delete", 
+        style: "destructive", 
+        onPress: () => {
+          setPlants(prev => prev.filter(plant => !selectedPlants.includes(plant.id)));
+          setIsSelecting(false);
+          setSelectedPlants([]);
+        }
+      }
+    ]);
   };
 
   if (!theme) {
     return null; 
   }
-
+  
   return (
-    <View style={[styles.container, { backgroundColor: theme.background }]}>
-      <View style={[styles.searchContainer,{ backgroundColor: theme.background }]}>
-        <Ionicons name="search-outline" size={20} color="#888" style={styles.searchIcon} />
-        <TextInput
-          style={[styles.searchInput, {color: theme.placeholderTex}]}
-          placeholder="Search plants..."
-          value={searchQuery}
-          onChangeText={setSearchQuery}
-        />
-      </View>
-
-      {filteredPlants.length === 0 ? (
-        <Text style={styles.emptyText}>No plants found. Try a different search term.</Text>
-      ) : (
-        <FlatList
-          data={filteredPlants}
-          keyExtractor={(item) => item.id}
-          numColumns={numColumns}
-          key={`numColumns-${numColumns}`}
-          renderItem={({ item }) => (
-            <TouchableOpacity
-              style={[styles.card, { backgroundColor: theme.cardBackground }, { width: cardWidth, marginLeft: 1 }]}
-              activeOpacity={0.7}
-              onPress={() => handlePlantPress(item.id)}
-            >
-              {item.imageUri ? (
-                <Image source={{ uri: item.imageUri }} style={styles.image} />
-              ) : (
-                <View style={[styles.placeholderImage, { backgroundColor: theme.cardBackground }]}>
-                  <Text style={[styles.placeholderText,{ color: theme.placeholderText }]}>No Image</Text>
-                </View>
-              )}
-              <View style={styles.cardContent}>
-                <View style={styles.cardTextContainer}>
-                  <View>
-                    <Text style={[styles.name, { color: theme.cardText }]}>{item.name}</Text>
-                    <Text style={[styles.date, { color: theme.cardText }]}>Date Added: {item.dateAdded}</Text>
-                  </View>
-                  <TouchableOpacity onPress={() => handleDeletePlant(item.id)} style={styles.deleteButton}>
-                    <Ionicons name="trash-outline" size={22} color="red" />
-                  </TouchableOpacity>
-                </View>
-              </View>
+    <FlatList
+      data={filteredPlants}
+      keyExtractor={(item) => item.id}
+      numColumns={numColumns}
+      style={[styles.container, { backgroundColor: theme.background, flex: 1  }]}
+      key={`numColumns-${numColumns}`}
+      
+      ListHeaderComponent={
+        <>
+          <View style={[styles.searchContainer]}>
+            <Ionicons name="search-outline" size={20} color="#888" style={styles.searchIcon} />
+            <TextInput
+              style={[styles.searchInput, { color: theme.placeholderTex }]}
+              placeholder="Search plants..."
+              value={searchQuery}
+              onChangeText={setSearchQuery}
+            />
+          </View>
+  
+          {isSelecting && (
+            <TouchableOpacity style={styles.deleteButton} onPress={handleDeleteSelected}>
+              <Ionicons name="trash-outline" size={22} color="white" />
+              <Text style={styles.deleteText}>Delete Selected</Text>
             </TouchableOpacity>
           )}
-        />
-      )}
+        </>
+      }
 
-      <TouchableOpacity style={[styles.addButton, { backgroundColor: theme.buttonBackground }]} onPress={() => navigation.navigate('Scan')}>
+      ListEmptyComponent={
+    <View style={styles.emptyStateContainer}>
+      <Text style={styles.emptyStateText}>No plants added yet.</Text>
+      <Text style={styles.emptyStateSubText}>Tap the button below to add your first plant!</Text>
+      <TouchableOpacity
+        style={[styles.addButton, { backgroundColor: theme.buttonBackground }]}
+        onPress={() => navigation.navigate('Scan')}
+      >
         <Text style={[styles.addButtonText, { color: theme.buttonText }]}>Add New Plant</Text>
       </TouchableOpacity>
     </View>
+  }
+       
+      ListFooterComponent={
+        <TouchableOpacity style={[styles.addButton, { backgroundColor: theme.buttonBackground }]} onPress={() => navigation.navigate('Scan')}>
+          <Text style={[styles.addButtonText, { color: theme.buttonText }]}>Add New Plant</Text>
+        </TouchableOpacity>
+      }
+      
+      renderItem={({ item }) => (
+        <TouchableOpacity
+          style={[
+            styles.card,
+            { backgroundColor: theme.cardBackground },
+            { width: cardWidth, marginLeft: 1 },
+            isSelecting && selectedPlants.includes(item.id) ? styles.selectedCard : null,
+          ]}
+          activeOpacity={0.7}
+          onPress={() => (isSelecting ? toggleSelectPlant(item.id) : handlePlantPress(item.id))}
+          onLongPress={toggleSelectionMode}
+        >
+          {item.imageUri ? (
+            <Image source={{ uri: item.imageUri }} style={styles.image} />
+          ) : (
+            <View style={[styles.placeholderImage, { backgroundColor: theme.cardBackground }]}>
+              <Text style={[styles.placeholderText, { color: theme.placeholderText }]}>No Image</Text>
+            </View>
+          )}
+          <View style={styles.cardContent}>
+            <View style={styles.cardTextContainer}>
+              <View>
+                <Text style={[styles.name, { color: theme.cardText }]}>{item.name}</Text>
+                <Text style={[styles.date, { color: theme.cardText }]}>{item.dateAdded}</Text>
+              </View>
+            </View>
+          </View>
+          {isSelecting && (
+            <View style={styles.checkbox}>
+              {selectedPlants.includes(item.id) && <Ionicons name="checkmark-circle" size={24} color="green" />}
+            </View>
+          )}
+        </TouchableOpacity>
+      )}
+    />
   );
 };
 
@@ -214,9 +256,8 @@ const styles = StyleSheet.create({
     color: '#777',
     marginTop: 4,
   },
-  deleteButton: {
-    padding: 5,
-  },
+  deleteButton: { flexDirection: 'row', backgroundColor: 'red', padding: 10, borderRadius: 5, alignItems: 'center', justifyContent: 'center', marginVertical: 10 },
+
   addButton: {
     backgroundColor: '#007BFF',
     paddingVertical: 12,
@@ -236,9 +277,22 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: 'bold',
   },
+  menuButton: { padding: 10 },
+  deleteText: { color: 'white', marginLeft: 5, fontWeight: 'bold' },
+  selectedCard: {
+    borderColor: 'green',
+    borderWidth: 2,
+  },
+  
+  checkbox: {
+    position: 'absolute',
+    top: 10,
+    right: 10,
+  },
 });
 
 export default ListScreen;
+
 
 
 

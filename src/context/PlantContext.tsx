@@ -13,6 +13,7 @@ interface PlantContextType {
   addPlant: (newPlant: Plant) => void;
   updatePlant: (updatedPlant: Plant) => void;
   deletePlant: (plantId: string) => void;
+  setPlants: React.Dispatch<React.SetStateAction<Plant[]>>;
 }
 
 
@@ -45,7 +46,7 @@ export const PlantProvider = ({ children }: PlantProviderProps) => {
       };
 
   return (
-    <PlantContext.Provider value={{ plants, addPlant, updatePlant, deletePlant }}>
+    <PlantContext.Provider value={{ plants, addPlant, updatePlant, deletePlant, setPlants }}>
       {children}  
     </PlantContext.Provider>
   );

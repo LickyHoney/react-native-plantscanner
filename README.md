@@ -58,7 +58,7 @@ Built with **React Native**, **Expo**, and **React Context API**, the app is des
 - **React Native & Expo**: Chosen for cross-platform support and fast development. Expo simplifies the use of native features like camera functionality and image picking without requiring additional configuration.
 - **Modular Components**: The app’s UI is divided into small, reusable components to ensure scalability and maintainability.
 - **Screens**:
-  - **List Screen**: The screen displays a list of all plants stored in the app, showcasing basic details such as the plant's name, image, and the date it was added. An "Add New Plant" button is provided to add new plants, which navigates to the Scan Screen for plant details. Initially, the screen is empty until plants are added.The list is scrollable and allows users to search for specific plants, delete them. Additionally, it navigates to the Detail Screen by tapping on the plant cards.  Detail Screen, users can view, update, and save information, including the plant's name, image, and optional notes.
+  - **List Screen**: The screen displays a scrollable list of plants, showing each plant's name, image, and added date. Users can search for plants, tap a card to navigate to the Detail Screen (for viewing/updating plant info), or long-press to enable selection mode. In selection mode, checkboxes appear on cards, and a Delete Selected button allows bulk deletion. An Add New Plant button navigates to the Scan Screen for adding plants. The list is empty initially until plants are added.
   - **Scan Screen**: Captures plant photos, allows users to input plant name and notes, and saves the data.
   - **Detail Screen**: Users can view and edit the plant's details by clicking on each card inn the list, such as its name, photo, and notes.
   - **Settings Screen & Profile Screen**: Empty navigable tabs.
@@ -94,15 +94,24 @@ Built with **React Native**, **Expo**, and **React Context API**, the app is des
 
 ---
 
+
+
+<!-- [Download the PDF](./docs/project-documentation.pdf) -->
 ## Screenshots
 
-![Plant List](./src/assets/screenshots/list-screen.png)
+![Empty List](./src/assets/screenshots/Home Page.jpg)
 *List Screen displaying all plants*
 
-![Scan Screen](./src/assets/screenshots/scan-screen.png)
+![Plant List](./src/assets/screenshots/List Screen light theme.jpg)
+*List Screen displaying all plants*
+
+![Add New Plant Button](./src/assets/screenshots/List View Scroll View.jpg)
+*List Screen displaying all plants*
+
+![Scan Screen](./src/assets/screenshots/scannscreen.jpg)
 *Scan Screen to add new plants*
 
-![Detail Screen](./src/assets/screenshots/detail-screen.png)
+![Detail Screen](./src/assets/screenshots/plant Detail screen.jpg)
 *Detail Screen displaying plant information*
 
 ---
@@ -114,7 +123,7 @@ To get the app running locally, follow these steps:
 1. **Clone the repository**:
     ```bash
     git clone https://github.com/LickyHoney/nocfo-plantphotoapp.git
-    cd plant-photo-app
+    cd nocfo-plantphotoapp
     ```
 
 2. **Install dependencies**:
@@ -133,7 +142,7 @@ To get the app running locally, follow these steps:
 
 ## Device Usage
 
-1. Open the app on your device or simulator.
+1. Open the app on your device or simulator and connect to the same wifi.
 2. On the **Scan Screen**, take a photo of your plant and enter its name and any notes.
 3. Press "Save Plant" to add it to the list.
 4. View your saved plants on the **List Screen** and tap on any plant to view its details on the **Detail Screen**.

@@ -97,7 +97,7 @@ const DetailScreen = ({ route, navigation }) => {
     <ScrollView style={[styles.container, { backgroundColor: theme.background }]} contentContainerStyle={{ flexGrow: 1 }}>
       <Text style={[styles.label,  {color: theme.placeholderText}]}>Plant Name</Text>
       <TextInput
-        style={[styles.input,{ backgroundColor: theme.background } ]}
+        style={[styles.input ]}
         value={name}
         onChangeText={setName}
         placeholder="Enter plant name"
@@ -105,20 +105,20 @@ const DetailScreen = ({ route, navigation }) => {
 
       <Text style={[styles.label, {color: theme.placeholderText}]}>Notes</Text>
       <TextInput
-        style={[styles.input, styles.textArea, { backgroundColor: theme.background }]}
+        style={[styles.input]}
         value={notes}
         onChangeText={setNotes}
         placeholder="Enter notes"
         multiline
       />
 
-      <Text style={styles.label}>Plant Image</Text>
+      <Text style={[styles.label, {color: theme.placeholderText}]}>Plant Image</Text>
       {imageUri ? (
         <Image source={{ uri: imageUri }} style={styles.image} />
       ) : (
-        <View style={[styles.placeholderImage,{ backgroundColor: theme.background } ]}>
+        <View style={[styles.placeholderImage ]}>
           <Ionicons name="image-outline" size={50} color="#666" />
-          <Text style={[styles.placeholderText,{color: theme.placeholderText} ]}>No Image</Text>
+          <Text style={[styles.placeholderText ]}>No Image</Text>
         </View>
       )}
 
@@ -137,12 +137,12 @@ const DetailScreen = ({ route, navigation }) => {
       <View style={[styles.buttonRow, { backgroundColor: theme.background }]}>
         <TouchableOpacity style={[styles.button, styles.saveButton]} onPress={handleSave}>
           <Ionicons name="save-outline" size={20} color="#fff" />
-          <Text style={[styles.buttonText,{color: theme.placeholderText}]}>Save Changes</Text>
+          <Text style={[styles.buttonText]}>Save Changes</Text>
         </TouchableOpacity>
 
         <TouchableOpacity style={[styles.button, styles.cancelButton]} onPress={() => navigation.goBack()}>
           <Ionicons name="close-circle-outline" size={20} color="#fff" />
-          <Text style={[styles.buttonText,{color: theme.placeholderText}]}>Cancel</Text>
+          <Text style={[styles.buttonText]}>Cancel</Text>
         </TouchableOpacity>
       </View>
     </ScrollView>

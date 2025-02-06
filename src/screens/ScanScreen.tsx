@@ -18,8 +18,20 @@ const ScanScreen = () => {
   const [errors, setErrors] = useState<{ name?: string; image?: string }>({});
   const { theme } = useContext(ThemeContext);
 
+
+  const requestCameraPermission = async () => {
+    const { status } = await ImagePicker.requestCameraPermissionsAsync();
+    return status === 'granted';
+  };
+
   // Handle picking image
   const handlePickImage = async () => {
+    const hasPermission = await requestCameraPermission();
+    
+    if (!hasPermission) {
+      alert('Camera permission is required to take a photo.');
+      return;
+    }
     const result = await ImagePicker.launchCameraAsync({
       allowsEditing: true,
       aspect: [4, 3],
@@ -71,7 +83,7 @@ const ScanScreen = () => {
   };
 
   return (
-    <ScrollView style={[styles.container,,{ backgroundColor: theme.background }]} contentContainerStyle={{ flexGrow: 1, justifyContent: 'center' }}>
+    <ScrollView style={[styles.container,{ backgroundColor: theme.background }]} contentContainerStyle={{ flexGrow: 1, justifyContent: 'center' }}>
       <Text style={[styles.title,{color: theme.placeholderText}]}>Add a New Plant</Text>
 
      
@@ -84,17 +96,17 @@ const ScanScreen = () => {
             setPlantName(text);
             setErrors((prev) => ({ ...prev, name: undefined })); 
           }}
-          style={styles.input}
+          style={[styles.input,{color: theme.placeholderText}]}
         />
       </View>
-      {errors.name && <Text style={[styles.errorText,{color: theme.placeholderText}]}>{errors.name}</Text>}
+      {errors.name && <Text style={[styles.errorText]}>{errors.name}</Text>}
 
       
       <TouchableOpacity style={styles.button} onPress={handlePickImage}>
         <Ionicons name="camera-outline" size={24} color="#fff" />
         <Text style={[styles.buttonText,{color: theme.placeholderText}]}>Take Photo</Text>
       </TouchableOpacity>
-      {errors.image && <Text style={[styles.errorText,{color: theme.placeholderText}]}>{errors.image}</Text>}
+      {errors.image && <Text style={[styles.errorText]}>{errors.image}</Text>}
 
     
       {imageUri && <Image source={{ uri: imageUri }} style={styles.image} />}
