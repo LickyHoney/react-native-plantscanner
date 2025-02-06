@@ -97,7 +97,7 @@ Built with **React Native**, **Expo**, and **React Context API**, the app is des
 
 
 <!-- [Download the PDF](./docs/project-documentation.pdf) -->
-## Screenshots
+<!-- ## Screenshots
 
 ![Empty List](./src/assets/screenshots/HomePage.jpg)
 *List Screen displaying empty list*
@@ -115,8 +115,27 @@ Built with **React Native**, **Expo**, and **React Context API**, the app is des
 *Detail Screen displaying plant information*
 
 ![Bottom Nav Bar](./src/assets/screenshots/bottom_navbar.jpg)
+*Detail Screen displaying plant information* -->
+
+## Screenshots
+
+<img src="./src/assets/screenshots/HomePage.jpg" alt="Empty List" width="300" height="600">
+*List Screen displaying empty list*
+
+<img src="./src/assets/screenshots/ListScreen_lighttheme.jpg" alt="Plant List" width="300" height="600">
+*List Screen displaying all plants*
+
+<img src="./src/assets/screenshots/ListView_scrollview.jpg" alt="Add New Plant Button" width="300" height="600">
+*List Screen displaying scroll view and add new plant button*
+
+<img src="./src/assets/screenshots/scannscreen.jpg" alt="Scan Screen" width="300" height="600">
+*Scan Screen to add new plants*
+
+<img src="./src/assets/screenshots/plant_Detail_screen.jpg" alt="Detail Screen" width="300" height="600">
 *Detail Screen displaying plant information*
 
+<img src="./src/assets/screenshots/bottom_navbar.jpg" alt="Bottom Nav Bar" width="300" height="600">
+*Bottom Navigation Bar*
 
 ---
 
