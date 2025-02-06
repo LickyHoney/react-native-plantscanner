@@ -149,7 +149,7 @@ Built with **React Native**, **Expo**, and **React Context API**, the app is des
 
 | Detail Screen | Bottom Nav Bar |
 |------------|------------|
-| <img src="./src/assets/screenshots/plant_Detail_screen.jpg" alt="Detail Screen" width="300" height="600"> | <img src="./src/assets/screenshots/bottom_navbar.jpg" alt="Bottom Nav Bar" width="300" height="600"> |
+| <img src="./src/assets/screenshots/plant_Detail_screen.jpg" alt="Detail Screen" width="300" height="600"> | <img src="./src/assets/screenshots/bottom_navbar.jpg" alt="Bottom Nav Bar" width="600" height="600"> |
 
 
 ---
