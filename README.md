@@ -1,5 +1,7 @@
 # Plant Photo Saver App
 
+This project is based on a take-home coding assignment for a mobile developer role. It demonstrates my ability to work with React Native and Expo, and to structure a clean, functional mobile app.
+
 A simple and intuitive mobile app that allows users to capture photos of plants, add their details (name, image, notes), and view them in a list. Built with **React Native** and **Expo**, the app supports both **portrait** and **landscape orientations** for a smooth user experience.
 
 ---
@@ -148,6 +150,7 @@ To get the app running locally, follow these steps:
 
 ---
 
+**Note:** This repo does not contain any proprietary or confidential information. It is shared for portfolio and skill demonstration purposes only.
 
 
 
